@@ -27,36 +27,36 @@
 
 	class Range {
 
-		constructor(settings) {
-			this.settings = settings || { 
-				color: 'red',
-				selector: '' 
-			};
+	    constructor(settings) {
+	        this.settings = settings || {
+	            color: 'red',
+	            selector: ''
+	        };
 
-			this._range = document.querySelector(this.settings.selector);
-			this._initValue = this._range.value;
-			this._inputValue = 0;
-			this._handlerRangeColorProgress = this.bind(this._handlerRangeColorProgress, this, this.settings);
-		}
+	        this._range = document.querySelector(this.settings.selector);
+	        this._initValue = this._range.value;
+	        this._handlerRangeColorProgress = this._bind(this._handlerRangeColorProgress, this, this.settings);
+	    }
 
-		bind(func, context) {
-		  return function() {
-		    return func.apply(context, arguments);
-		  };
-		}
+	    rangeColorProgress() {
+	        this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${this._initValue}%, #fff ${this._initValue}%, #fff 100%)`;
+	        this._range.addEventListener('input', this._handlerRangeColorProgress);
+	    }
 
-		rangeColorProgress() {
-			this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${this._initValue}%, #fff ${this._initValue}%, #fff 100%)`;
-			this._range.addEventListener('input', this._handlerRangeColorProgress);
-		}
+	    _bind(func, context) {
+	        return function() {
+	            return func.apply(context, arguments);
+	        };
+	    }
 
-		_handlerRangeColorProgress(e){
-			const inputValue = e.target.value;
-			this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${inputValue}%, #fff ${inputValue}%, #fff 100%)`;
-		}
+	    _handlerRangeColorProgress(e){
+	        const inputValue = e.target.value;
+	        this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${inputValue}%, #fff ${inputValue}%, #fff 100%)`;
+	    }
 	}
 
-	const rangeVolume = new Range( { selector: 'input[type=range]', color: 'red' } );
+
+	const rangeVolume = new Range( { selector: 'input[type=range]', color: 'yellow' } );
 	rangeVolume.rangeColorProgress();
 
 </script>
