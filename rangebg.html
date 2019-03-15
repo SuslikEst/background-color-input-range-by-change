@@ -36,6 +36,7 @@
 			this._range = document.querySelector(this.settings.selector);
 			this._initValue = this._range.value;
 			this._inputValue = 0;
+			this._handlerRangeColorProgress = this.bind(this._handlerRangeColorProgress, this, this.settings);
 		}
 
 		bind(func, context) {
@@ -46,14 +47,12 @@
 
 		rangeColorProgress() {
 			this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${this._initValue}%, #fff ${this._initValue}%, #fff 100%)`;
-			this._range.addEventListener('input', (e) => {
-				const inputValue = e.target.value;
-				this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${inputValue}%, #fff ${inputValue}%, #fff 100%)`;
-			});
+			this._range.addEventListener('input', this._handlerRangeColorProgress);
 		}
 
-		_handlerRangeColorProgress(){
-			
+		_handlerRangeColorProgress(e){
+			const inputValue = e.target.value;
+			this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${inputValue}%, #fff ${inputValue}%, #fff 100%)`;
 		}
 	}
 
