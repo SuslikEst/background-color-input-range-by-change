@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		input[type=range] {
+		    -webkit-appearance: none;
+		    border-radius:2px;
+		    width:600px;
+		    height:10px;
+		    outline : none;
+		    border:1px solid #D4D4D4;
+		}
+	</style>
+</head>
+<body>
+
+
+
+<!-- <input type="range" min="0" max="100" step="5" value="50" oninput="range()"/> -->
+<input type="range" min="0" max="100" step="5" value="50"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+	class Range {
+
+		constructor(settings) {
+			this.settings = settings || { 
+				color: 'red',
+				selector: '' 
+			};
+
+			this._range = document.querySelector(this.settings.selector);
+			this._initValue = this._range.value;
+			this._inputValue = 0;
+		}
+
+		rangeColorProgress() {
+			this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${this._initValue}%, #fff ${this._initValue}%, #fff 100%)`;
+			this._range.addEventListener('input', (e) => {
+				const inputValue = e.target.value;
+				this._range.style.background = `-webkit-linear-gradient(left, ${this.settings.color} 0%, ${this.settings.color} ${inputValue}%, #fff ${inputValue}%, #fff 100%)`;
+			});
+		}
+
+	}
+
+	const rangeVolume = new Range( { selector: 'input[type=range]', color: 'red' } );
+	rangeVolume.rangeColorProgress();
+
+</script>
+
+
+</body>
+</html>
